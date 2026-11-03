@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+requests
+dnspython
+beautifulsoup4
+tldextract
+pydantic

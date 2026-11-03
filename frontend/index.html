@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Detect threats before they reach you</title>
+    <meta name="description" content="Analyze suspicious links, messages and emails before you trust them.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Boxicons for modern icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <!-- Background Animation Elements -->
+    <div class="cyber-bg">
+        <div class="glow-orb"></div>
+        <div class="grid-lines"></div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class='bx bx-shield-quarter glow-icon'></i>
+            <span>PhishGuard</span>
+        </div>
+        
+        <div class="nav-links">
+            <a href="#" class="nav-item active" data-page="page-scanner">Scanner</a>
+            <a href="#" class="nav-item" data-page="page-history">History</a>
+            <a href="#" class="nav-item" data-page="page-how-it-works">How It Works</a>
+        </div>
+        
+        <div class="nav-actions">
+            <button class="btn btn-outline" id="theme-toggle" aria-label="Toggle Dark/Light Mode">
+                <i class='bx bx-sun' id="theme-icon"></i>
+            </button>
+            <button class="btn btn-primary" onclick="window.scrollTo(0,0)">Scan Now</button>
+            <button class="mobile-menu"><i class='bx bx-menu'></i></button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Page: Scanner -->
+        <div id="page-scanner" class="page-view active-page">
+            <!-- Hero Section -->
+        <section class="hero">
+            <h1>Don't Get Phished.</h1>
+            <p>Analyze suspicious links, messages and emails before you trust them.</p>
+        </section>
+
+        <!-- Scanner Card -->
+        <section class="scanner-container">
+            <div class="glass-card scanner-card">
+                
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-target="url-scanner">
+                        <i class='bx bx-link'></i> URL Scanner
+                    </button>
+                    <button class="tab-btn" data-target="message-scanner">
+                        <i class='bx bx-message-dots'></i> Message Scanner
+                    </button>
+                    <button class="tab-btn" data-target="email-scanner">
+                        <i class='bx bx-envelope'></i> Email Scanner
+                    </button>
+                </div>
+
+                <!-- URL Scanner -->
+                <div class="tab-content active" id="url-scanner">
+                    <form id="url-form">
+                        <div class="input-group">
+                            <i class='bx bx-globe input-icon'></i>
+                            <input type="text" id="url-input" placeholder="Paste a suspicious URL here..." required autocomplete="off">
+                            <button type="button" class="clear-btn" id="clear-url"><i class='bx bx-x'></i></button>
+                        </div>
+                        <div class="example-buttons">
+                            <span>Try examples:</span>
+                            <button type="button" class="example-btn" data-input="url-input" data-val="https://google.com">Safe URL</button>
+                            <button type="button" class="example-btn" data-input="url-input" data-val="http://192.168.1.1/login">Suspicious IP</button>
+                            <button type="button" class="example-btn" data-input="url-input" data-val="https://paypa1.com@evil.com/secure-update">Typosquatting</button>
+                        </div>
+                        <button type="submit" class="btn btn-scan">
+                            <span>Scan URL</span>
+                            <i class='bx bx-scan'></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Message Scanner -->
+                <div class="tab-content" id="message-scanner">
+                    <form id="message-form">
+                        <div class="input-group textarea-group">
+                            <i class='bx bx-message-square-detail input-icon'></i>
+                            <textarea id="message-input" placeholder="Paste a suspicious SMS, WhatsApp message, or social media message..." rows="5" required></textarea>
+                            <button type="button" class="clear-btn" id="clear-message"><i class='bx bx-x'></i></button>
+                        </div>
+                        <div class="example-buttons">
+                            <span>Try examples:</span>
+                            <button type="button" class="example-btn" data-input="message-input" data-val="Hi mom, I lost my phone. This is my new number. Please send $500 to my bank account urgently.">Emergency Scam</button>
+                            <button type="button" class="example-btn" data-input="message-input" data-val="Your account has been temporarily locked. Verify your identity at http://paypa1-secure.xyz to restore access.">Phishing SMS</button>
+                        </div>
+                        <button type="submit" class="btn btn-scan">
+                            <span>Analyze Message</span>
+                            <i class='bx bx-scan'></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Email Scanner -->
+                <div class="tab-content" id="email-scanner">
+                    <form id="email-form">
+                        <div class="input-group">
+                            <i class='bx bx-user input-icon'></i>
+                            <input type="email" id="email-sender" placeholder="Sender Email (e.g., support@paypal.com)" required autocomplete="off">
+                        </div>
+                        <div class="input-group">
+                            <i class='bx bx-text input-icon'></i>
+                            <input type="text" id="email-subject" placeholder="Subject Line" required autocomplete="off">
+                        </div>
+                        <div class="input-group textarea-group">
+                            <i class='bx bx-envelope-open input-icon'></i>
+                            <textarea id="email-body" placeholder="Email Content..." rows="5" required></textarea>
+                        </div>
+                        <div class="example-buttons">
+                            <span>Try examples:</span>
+                            <button type="button" class="example-btn email-example" data-sender="support-team@gmail.com" data-subject="URGENT: Action Required for Your Account" data-body="Dear Customer, we detected unusual activity on your account. Please click here to update your password immediately. If you do not verify within 24 hours, your account will be suspended.">Account Warning</button>
+                        </div>
+                        <button type="submit" class="btn btn-scan">
+                            <span>Analyze Email</span>
+                            <i class='bx bx-scan'></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Loading State (Hidden by default) -->
+                <div class="loading-state" id="loading-state">
+                    <div class="radar"></div>
+                    <h3 id="loading-text">Analyzing URL...</h3>
+                    <div class="loading-steps">
+                        <div class="step active">Checking domain...</div>
+                        <div class="step">Inspecting structure...</div>
+                        <div class="step">Calculating risk...</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Result Dashboard (Hidden by default) -->
+        <section class="result-dashboard" id="result-dashboard">
+            <div class="dashboard-header">
+                <h2>Scan Result</h2>
+                <button class="btn btn-outline" id="btn-new-scan"><i class='bx bx-refresh'></i> New Scan</button>
+            </div>
+            
+            <div class="result-grid">
+                <!-- Score Card -->
+                <div class="glass-card score-card">
+                    <div class="circular-meter" id="score-meter">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg"
+                                d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+                            <path class="circle" id="score-circle"
+                                stroke-dasharray="0, 100"
+                                d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                            />
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-value" id="score-value">0</span>
+                            <span class="score-label">/100</span>
+                        </div>
+                    </div>
+                    <div class="threat-level" id="threat-level">HIGH RISK</div>
+                    <p class="summary-text" id="result-summary">This URL contains multiple characteristics commonly associated with suspicious links.</p>
+                </div>
+
+                <!-- Recommendations & Why Flagged -->
+                <div class="result-details">
+                    <div class="glass-card why-flagged-card">
+                        <h3><i class='bx bx-help-circle'></i> Why Was This Flagged?</h3>
+                        <ul id="why-flagged-list" class="human-readable-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+                    
+                    <div class="glass-card recommendations-card">
+                        <h3><i class='bx bx-shield-plus'></i> Recommendations</h3>
+                        <ul id="recommendations-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Checks -->
+            <div class="glass-card detailed-checks-card">
+                <h3>Detailed Security Checks</h3>
+                <div class="checks-list" id="checks-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </section>
+        </div> <!-- End Page: Scanner -->
+
+        <!-- Page: History -->
+        <div id="page-history" class="page-view" style="display: none;">
+        <!-- History Dashboard -->
+        <section class="history-section" id="history-section">
+            <div class="dashboard-header">
+                <h2>Local Scan History</h2>
+                <button class="btn btn-outline" id="clear-history"><i class='bx bx-trash'></i> Clear History</button>
+            </div>
+            
+            <div class="stats-cards">
+                <div class="glass-card stat-card">
+                    <div class="stat-icon"><i class='bx bx-history'></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-total">0</h4>
+                        <span>Total Scans</span>
+                    </div>
+                </div>
+                <div class="glass-card stat-card safe-stat">
+                    <div class="stat-icon"><i class='bx bx-check-shield'></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-safe">0</h4>
+                        <span>Safe</span>
+                    </div>
+                </div>
+                <div class="glass-card stat-card suspicious-stat">
+                    <div class="stat-icon"><i class='bx bx-error-alt'></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-suspicious">0</h4>
+                        <span>Suspicious</span>
+                    </div>
+                </div>
+                <div class="glass-card stat-card risk-stat">
+                    <div class="stat-icon"><i class='bx bx-skull'></i></div>
+                    <div class="stat-info">
+                        <h4 id="stat-high-risk">0</h4>
+                        <span>High Risk</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card history-table-container">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Input</th>
+                            <th>Score</th>
+                            <th>Result</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <!-- Populated dynamically -->
+                        <tr class="empty-row"><td colspan="5">No scan history available.</td></tr>
+                    </tbody>
+                </table>
+                <p class="privacy-note"><i class='bx bx-lock-alt'></i> Scan history is stored locally in your browser and never sent to our servers.</p>
+            </div>
+        </section>
+        </div> <!-- End Page: History -->
+        
+        <!-- Page: How It Works -->
+        <div id="page-how-it-works" class="page-view" style="display: none;">
+            <section class="how-it-works-section">
+                <!-- Header -->
+                <div class="hiw-hero">
+                    <h2>How It Works</h2>
+                    <p>Paste. Scan. Stay Safe. — Three simple steps.</p>
+                </div>
+
+                <!-- Visual Flow -->
+                <div class="hiw-flow">
+                    <div class="hiw-flow-step">
+                        <div class="hiw-icon-circle"><i class='bx bx-paste'></i></div>
+                        <h4>Paste Input</h4>
+                        <p>URL, message, or email</p>
+                    </div>
+                    <div class="hiw-flow-arrow"><i class='bx bx-right-arrow-alt'></i></div>
+                    <div class="hiw-flow-step">
+                        <div class="hiw-icon-circle accent-green"><i class='bx bx-analyse'></i></div>
+                        <h4>14+ Checks Run</h4>
+                        <p>Instantly analyzed</p>
+                    </div>
+                    <div class="hiw-flow-arrow"><i class='bx bx-right-arrow-alt'></i></div>
+                    <div class="hiw-flow-step">
+                        <div class="hiw-icon-circle accent-yellow"><i class='bx bx-shield-alt-2'></i></div>
+                        <h4>Risk Score</h4>
+                        <p>0 – 100 rating</p>
+                    </div>
+                </div>
+
+                <!-- What We Check -->
+                <h3 class="hiw-section-title">What We Check</h3>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-link-alt'></i></div>
+                        <h4>URL Structure</h4>
+                        <p>Length, IP addresses, @ tricks, subdomains</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-search-alt'></i></div>
+                        <h4>Keyword Scan</h4>
+                        <p>Phishing words like "verify", "urgent", "OTP"</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-globe'></i></div>
+                        <h4>Domain Check</h4>
+                        <p>DNS resolution, suspicious TLDs, shorteners</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-user-x'></i></div>
+                        <h4>Impersonation</h4>
+                        <p>Detects fake look-alikes of Google, PayPal, etc.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-lock-alt'></i></div>
+                        <h4>SSL & HTTPS</h4>
+                        <p>Certificate validity and encryption check</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon"><i class='bx bx-transfer-alt'></i></div>
+                        <h4>Redirects</h4>
+                        <p>Traces hidden redirect chains</p>
+                    </div>
+                </div>
+
+                <!-- Risk Score Legend -->
+                <h3 class="hiw-section-title">Risk Score Guide</h3>
+                <div class="glass-card">
+                    <div class="risk-legend">
+                        <div class="risk-legend-item">
+                            <div class="risk-bar safe-bar"></div>
+                            <div class="risk-legend-info">
+                                <strong>0 – 24</strong>
+                                <span class="badge threat-safe">SAFE</span>
+                                <p>No threats detected.</p>
+                            </div>
+                        </div>
+                        <div class="risk-legend-item">
+                            <div class="risk-bar low-bar"></div>
+                            <div class="risk-legend-info">
+                                <strong>25 – 49</strong>
+                                <span class="badge threat-low_risk">LOW RISK</span>
+                                <p>Minor flags. Proceed with caution.</p>
+                            </div>
+                        </div>
+                        <div class="risk-legend-item">
+                            <div class="risk-bar suspicious-bar"></div>
+                            <div class="risk-legend-info">
+                                <strong>50 – 74</strong>
+                                <span class="badge threat-suspicious">SUSPICIOUS</span>
+                                <p>Multiple red flags. Avoid sharing data.</p>
+                            </div>
+                        </div>
+                        <div class="risk-legend-item">
+                            <div class="risk-bar danger-bar"></div>
+                            <div class="risk-legend-info">
+                                <strong>75 – 100</strong>
+                                <span class="badge threat-high_risk">HIGH RISK</span>
+                                <p>Likely malicious. Do not interact.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div> <!-- End Page: How It Works -->
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="js/history.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/scanner.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
